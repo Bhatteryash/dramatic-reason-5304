@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poltical Pluse</title>
+    <link rel="stylesheet" href="./allcss/header.css">
+  <link rel="stylesheet" href="./style/politicalpulse.css">
+</head>
+<body>
+  <header id="header"></header>
+    <div id="container">
+     
+        <div id="political_navbar">
+          <!-- <hr id="line2"> -->
+            <div id="task_bar">
+       
+                <a href="">Home</a>
+                <span>/ Political Pulse</span>
+            </div>
+            <div id="sub_navbar">
+              <h3>POLITICAL PULSE NEWS</h3>
+            </div>
+            <div id="slideshow">
+                <div id="slideshowdiv"></div>
+                <div id="slideshowdata"></div>
+            </div>
+            <hr id="line">
+            <div id="main_page">
+              <div id="political_page"></div>
+              <div id="side_bar"></div>
+            </div>
+           
+           
+         </div>
+    </div>
+
+
+   
+  
+       
+
+    <footer id="footer"></footer>
+</body>
+</html>
+<script src="./script/politicalpulse.js"></script>
+<script src="./header/header.js" type="module"></script>
+
+
+<script type="module">
+  // Header and footer
+
+import {header,footer} from "../header/header.js";
+
+document.getElementById("header").innerHTML=header();
+document.getElementById("footer").innerHTML=footer();
+
+var twitter=document.getElementById("fb");
+  twitter.addEventListener("click",function(){
+        window.open("https://twitter.com/IndianExpress?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor");
+  })
+
+  var fb=document.getElementById("twitter");
+  fb.addEventListener("click",function(){
+        window.open("https://www.facebook.com/indianexpress");
+  })
+
+var date = new Date().toUTCString();    
+  document.getElementById("date").innerText = date;
+
+  window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("bottomhead");
+
+function myFunction() {
+if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+  navbar.style.position= "fixed";
+    navbar.style.top="0px";
+    navbar.style.width="100%";
+} else {
+  navbar.style.position= "static";
+}
+}
+//  Search code 
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'c71164da45msh1f47a14d576454dp1f583ajsn5864dad38a50',
+		'X-RapidAPI-Host': 'free-news.p.rapidapi.com'
+	}
+};
+
+
+    let searchresults=()=>{
+        var searchbox=document.getElementById("searchbox1").value;
+    
+        setTimeout(() => {
+       
+       fetch(`https://free-news.p.rapidapi.com/v1/search?q=${searchbox}&lang=en`, options)
+ .then(function(response){return response.json()})
+ .then(function(response){
+       console.log(response.articles);
+
+      let searchdata=[];
+        searchdata.push(response.articles);
+    
+        localStorage.setItem("searchdata",JSON.stringify(searchdata));
+        localStorage.setItem("searchbox",JSON.stringify(searchbox));
+    
+        window.open("searchresults.html")
+       
+   })
+ .catch(err => console.error(err));
+
+     }, "1000");     
+    
+    }
+    document.getElementById("searchres").addEventListener("click",()=>{
+        searchresults();
+     })
+</script>
